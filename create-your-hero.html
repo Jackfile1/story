@@ -1,9 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Hero Mystery Comic</title>
+  <title>Create Your Hero</title>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
     body {
@@ -67,18 +68,26 @@
     }
 
     #heroPreview {
-      width: 240px; height: 420px;
-      border-radius: 25px;
-      box-shadow: 0 0 40px rgba(127, 0, 255, 0.9);
-      background: linear-gradient(to bottom, #383838, #250050);
-      overflow: hidden;
-      position: relative;
-      margin-bottom: 30px;
-      animation: float 3s ease-in-out infinite;
-    }
+  width: 240px;
+  height: 420px;
+  border-radius: 25px;
+  background: linear-gradient(to bottom, #383838, #250050);
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 30px;
+  animation: float 3s ease-in-out infinite, glowPulse 2.5s infinite alternate;
+  transition: box-shadow 0.4s ease;
+}
 
     @keyframes float {
-      0%, 100% { transform: translateY(0); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes glowPulse {
+  from { box-shadow: 0 0 20px rgba(255, 255, 255, 0.1); }
+  to { box-shadow: 0 0 40px rgba(255, 255, 255, 0.4); }
+}
       50% { transform: translateY(-10px); }
     }
 
@@ -110,6 +119,31 @@
       from {opacity: 0.2;}
       to {opacity: 0.5;}
     }
+      @media (max-width: 768px) {
+      h1 {
+        font-size: 28px;
+      }
+
+      #characterCreator {
+        flex-direction: column;
+        gap: 30px;
+      }
+
+      #heroPreview {
+        width: 200px;
+        height: 360px;
+      }
+
+      select, input[type="text"] {
+        width: 90%;
+        font-size: 14px;
+      }
+
+      .choice-btn {
+        font-size: 18px;
+        padding: 10px 30px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -117,7 +151,7 @@
   <h1>✨ Begin Your Heroic Adventure ✨</h1>
   <div id="characterCreator" style="display:flex; gap:60px; justify-content:center; align-items:center; flex-wrap:wrap;">
 
-    <div id="heroPreview">
+    <div id="heroPreview" style="width: 240px; height: 420px; border-radius: 25px; background: linear-gradient(to bottom, #383838, #250050); overflow: hidden; position: relative; margin-bottom: 30px; animation: float 3s ease-in-out infinite; box-shadow: 0 0 40px rgba(127, 0, 255, 0.9); transition: box-shadow 0.4s ease;">
       <img id="imgHeroBase" style="position:absolute; height:100%; left:50%; transform:translateX(-50%); transition: opacity 0.5s ease; z-index:1;" />
       <div id="selectedHeroName"></div>
     </div>
@@ -125,34 +159,42 @@
     <div>
       <label>🌟 Select Your Hero 🌟</label>
       <select id="heroBaseChoice">
-        <option value="nova">Nova</option>
-        <option value="echo">Echo</option>
-        <option value="luna">Luna</option>
-        <option value="blaze">Blaze</option>
-        <option value="skye">Skye</option>
-        <option value="rowan">Rowan</option>
-      </select>
+  <option value="nova" data-img="images/nova.png">🟣 Nova</option>
+  <option value="echo" data-img="images/echo.png">🔵 Echo</option>
+  <option value="luna" data-img="images/luna.png">🌙 Luna</option>
+  <option value="blaze" data-img="images/blaze.png">🔥 Blaze</option>
+  <option value="skye" data-img="images/skye.png">☁️ Skye</option>
+  <option value="rowan" data-img="images/rowan.png">🌿 Rowan</option>
+</select>
+      <div id="dropdownIconPreview" style="margin-top: 10px;"></div>
+
+      <div id="heroBio" style="margin-top: 10px; font-size: 16px; max-width: 260px; color: #ccc;"></div>
 
       <label>🦸 Name Your Hero 🦸‍♂️</label>
       <input type="text" id="heroName" placeholder="Enter hero name"/>
 
-      <!-- Begin Adventure button now links to the first chapter -->
-      <a href="chapter1.html">
-        <button class="choice-btn" id="beginBtn">🚀 Begin Adventure 🚀</button>
-      </a>
+      <div style="margin-top: 20px; font-size: 16px; color: #ccc; max-width: 320px; margin-left: auto; margin-right: auto;">
+  In a city where shadows rise and a crystal’s power is stolen, your choices shape the fate of Starfall. Are you ready?
+</div>
+
+<a href="chapter1.html">
+  <button class="choice-btn" id="beginBtn">🚀 Begin Adventure 🚀</button>
+</a>
     </div>
   </div>
 
 <script>
-const imagePath = "C:/Users/Gr00c/OneDrive/Desktop/Story/images/";
+const imagePath = "images/";
 
 const heroBaseChoice = document.getElementById('heroBaseChoice');
 const heroNameInput = document.getElementById('heroName');
 const heroPreviewName = document.getElementById('selectedHeroName');
 const imgHeroBase = document.getElementById('imgHeroBase');
 
-// Function to update the hero preview image
 function updateHeroPreview() {
+  const iconPreview = document.getElementById('dropdownIconPreview');
+  const bio = document.getElementById('heroBio');
+  const preview = document.getElementById('heroPreview');
   imgHeroBase.style.opacity = 0;
   setTimeout(() => {
     imgHeroBase.src = imagePath + heroBaseChoice.value + ".png";
@@ -160,25 +202,38 @@ function updateHeroPreview() {
   }, 300);
   heroPreviewName.textContent = heroNameInput.value;
 
-  // Store selected hero and name in localStorage
+  const hero = heroBaseChoice.value;
+  const bios = {
+    nova: 'Nova controls starlight and energy, known for courage and wisdom.',
+    echo: 'Echo manipulates sound and frequency, a stealthy strategist.',
+    luna: 'Luna wields moonlight illusions and is deeply empathetic.',
+    blaze: 'Blaze commands fire and speed, a fierce and loyal warrior.',
+    skye: 'Skye glides the wind and clouds, always adventurous.',
+    rowan: 'Rowan bonds with nature and earth, calm and powerful.'
+  };
+  const glows = {
+    nova: '#8f00ff',
+    echo: '#00bfff',
+    luna: '#b0c4de',
+    blaze: '#ff4500',
+    skye: '#1e90ff',
+    rowan: '#32cd32'
+  };
+
+  bio.textContent = bios[hero] || '';
+  preview.style.boxShadow = `0 0 40px ${glows[hero]}`;
+  iconPreview.innerHTML = `<img src='images/${hero}.png' style='width: 80px; margin-top: 10px; border-radius: 12px; box-shadow: 0 0 10px ${glows[hero]};'>`;
+
   localStorage.setItem("hero", heroBaseChoice.value);
   localStorage.setItem("heroName", heroNameInput.value);
 }
 
-// Event listener to update the hero preview when the user selects a hero
 heroBaseChoice.addEventListener('change', updateHeroPreview);
 heroNameInput.addEventListener('keyup', updateHeroPreview);
-
-// Initialize preview on page load
 window.onload = updateHeroPreview;
 </script>
 </body>
 </html>
-
-
-
-
-
 
 
 
