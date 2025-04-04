@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Mystery Comic - Welcome</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to bottom, #1e003a, #000);
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    h1 {
+      font-size: 36px;
+      text-shadow: 0 0 10px #7f00ff;
+    }
+    p {
+      font-size: 18px;
+      max-width: 700px;
+      margin: 20px auto;
+    }
+    .hero-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin: 40px auto;
+      max-width: 900px;
+    }
+    .hero-card {
+      background: #2c2c2c;
+      border-radius: 20px;
+      padding: 20px;
+      width: 160px;
+      box-shadow: 0 4px 15px rgba(127, 0, 255, 0.5);
+    }
+    .hero-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 15px;
+    }
+    .hero-name {
+      margin-top: 10px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .start-btn {
+      margin-top: 40px;
+      padding: 14px 40px;
+      font-size: 20px;
+      background-color: #7f00ff;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(127, 0, 255, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <h1>🌟 Welcome to the Hero Mystery Comic 🌟</h1>
+  <p>In the dazzling city of Starfall, a mysterious force has stolen the Great Crystal. It's up to a new hero to uncover the truth, restore balance, and shape the fate of the world. That hero... is you.</p>
+  <p>Choose your character, make bold choices, and discover hidden secrets as your adventure unfolds.</p>
+
+  <div class="hero-grid">
+    <div class="hero-card">
+      <img src="images/nova.png" alt="Nova">
+      <div class="hero-name">Nova</div>
+    </div>
+    <div class="hero-card">
+      <img src="images/echo.png" alt="Echo">
+      <div class="hero-name">Echo</div>
+    </div>
+    <div class="hero-card">
+      <img src="images/luna.png" alt="Luna">
+      <div class="hero-name">Luna</div>
+    </div>
+    <div class="hero-card">
+      <img src="images/blaze.png" alt="Blaze">
+      <div class="hero-name">Blaze</div>
+    </div>
+    <div class="hero-card">
+      <img src="images/skye.png" alt="Skye">
+      <div class="hero-name">Skye</div>
+    </div>
+    <div class="hero-card">
+      <img src="images/rowan.png" alt="Rowan">
+      <div class="hero-name">Rowan</div>
+    </div>
+  </div>
+
+  <a href="hero-select.html">
+    <button class="start-btn">🚀 Begin Your Adventure</button>
+  </a>
+</body>
+</html>
