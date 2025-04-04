@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Mystery Comic - Mayor's Office</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to bottom, #1e003a, #000000);
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      padding: 50px;
+      text-align: center;
+    }
+
+    .story-text {
+      font-size: 18px;
+      max-width: 800px;
+      margin: auto;
+      line-height: 1.6;
+    }
+
+    #heroDisplay {
+      margin: 30px auto;
+    }
+
+    #heroImage {
+      width: 150px;
+      height: 270px;
+      object-fit: contain;
+    }
+
+    #heroName {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 10px;
+      text-shadow: 1px 1px 4px #000;
+    }
+
+    .choice-btn {
+      margin: 25px 10px;
+      padding: 12px 35px;
+      background-color: #7f00ff;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 18px;
+      box-shadow: 0 4px 15px rgba(127, 0, 255, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <div id="heroDisplay">
+    <img id="heroImage" src="" alt="Hero Image">
+    <div id="heroName"></div>
+  </div>
+
+  <div class="story-text" id="mayorScene"></div>
+
+  <button class="choice-btn" onclick="goToNextChapter('chapter5', 'chapter5.html')">➡️ Continue to Chapter 5</button>
+
+  <script>
+    function initHero() {
+      const hero = localStorage.getItem("hero");
+      const heroName = localStorage.getItem("heroName");
+      if (hero && heroName) {
+        const img = document.getElementById("heroImage");
+        const name = document.getElementById("heroName");
+        img.src = "images/" + hero + ".png";
+        name.textContent = heroName;
+      }
+    }
+
+    function goToNextChapter(choice, nextPage) {
+      localStorage.setItem("previousChoice", choice);
+      window.location.href = nextPage;
+    }
+
+    window.onload = function () {
+      initHero();
+      const choice = localStorage.getItem("previousChoice");
+      const mayorScene = document.getElementById("mayorScene");
+
+      let text = "You step into Mayor Ellison’s grand office. The walls shimmer with protective wards, and a giant map of the city glows softly behind his desk.";
+
+      if (choice === "tower") {
+        text += `<p>Mayor Ellison listens intently as you describe the fractured pedestal and strange symbols under the tower. He frowns deeply. <em>\"I feared something ancient was buried there. This is worse than I imagined.\"</em></p>`;
+      } else if (choice === "woods") {
+        text += `<p>When you mention the Shadow Sage’s words, the mayor’s eyes widen. <em>\"The forest spirits have kept their silence for decades. If they’re warning us now, we must act fast.\"</em></p>`;
+      } else if (choice === "market") {
+        text += `<p>You speak of the underground lab and the stolen relics. The mayor slams his fist on the desk. <em>\"They’ve been building something — right under our noses!\"</em></p>`;
+      } else {
+        text += `<p>The mayor looks tired but hopeful. <em>\"Whatever you’ve learned, we need your strength. You’re the city’s last light.\"</em></p>`;
+      }
+
+      text += `<p>He hands you a sealed letter and a glowing medallion. <em>\"Find the truth. And whatever you do — don’t face it alone.\"</em></p>`;
+
+      mayorScene.innerHTML = text;
+    };
+  </script>
+</body>
+</html>

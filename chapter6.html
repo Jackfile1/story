@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Mystery Comic - Chapter 6</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to bottom, #121212, #1e003a);
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      padding: 50px;
+      text-align: center;
+    }
+
+    .story-text {
+      max-width: 800px;
+      margin: auto;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    #heroDisplay {
+      margin: 30px auto;
+    }
+
+    #heroImage {
+      width: 150px;
+      height: 270px;
+      object-fit: contain;
+    }
+
+    #heroName {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 10px;
+      text-shadow: 1px 1px 4px #000;
+    }
+
+    .choice-btn {
+      margin: 20px;
+      padding: 12px 35px;
+      background-color: #7f00ff;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 20px;
+      box-shadow: 0 4px 15px rgba(127, 0, 255, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <div id="heroDisplay">
+    <img id="heroImage" src="" alt="Hero Image">
+    <div id="heroName"></div>
+  </div>
+
+  <div class="story-text">
+    <h2>✨ Chapter 6: The Verdict ✨</h2>
+    <p>The council chamber falls silent. All eyes are on you.</p>
+    <p><em>“You’ve heard our truths,”</em> the Shadow Sage says. <em>“Now you must choose our future.”</em></p>
+    <p>Your heart races. The next path will define everything.</p>
+
+    <p><strong>What will you do?</strong></p>
+
+    <button class="choice-btn" onclick="goToNextChapter('solo', 'chapter6a.html')">🧭 Take on the mission alone</button>
+    <button class="choice-btn" onclick="goToNextChapter('defense', 'chapter6b.html')">⚔️ Activate the city's hidden defenses</button>
+    <button class="choice-btn" onclick="goToNextChapter('wait', 'chapter6c.html')">⏳ Wait and trust in fate</button>
+  </div>
+
+  <script>
+    function initHero() {
+      const hero = localStorage.getItem("hero");
+      const heroName = localStorage.getItem("heroName");
+      if (hero && heroName) {
+        document.getElementById("heroImage").src = "images/" + hero + ".png";
+        document.getElementById("heroName").textContent = heroName;
+      }
+    }
+
+    function goToNextChapter(choice, nextPage) {
+      localStorage.setItem("previousChoice", choice);
+      window.location.href = nextPage;
+    }
+
+    window.onload = initHero;
+  </script>
+</body>
+</html>

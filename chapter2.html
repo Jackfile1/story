@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hero Mystery Comic - Chapter 2</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to bottom, #121212, #1e003a);
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      padding: 50px;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #heroDisplay {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    #heroImage {
+      width: 150px;
+      height: 270px;
+      object-fit: contain;
+    }
+
+    #heroName {
+      font-size: 24px;
+      font-weight: bold;
+      text-shadow: 1px 1px 4px #000;
+      margin-top: 10px;
+    }
+
+    .story-text {
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 10px auto;
+      text-align: center;
+    }
+
+    .choice-btn {
+      margin: 20px;
+      padding: 12px 35px;
+      background-color: #7f00ff;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 20px;
+      box-shadow: 0 4px 15px rgba(127, 0, 255, 0.7);
+    }
+
+    .background-stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(white 2px, transparent 2px);
+      background-size: 100px 100px;
+      opacity: 0.2;
+      animation: twinkle 5s infinite alternate;
+      z-index: -1;
+    }
+
+    @keyframes twinkle {
+      from {opacity: 0.2;}
+      to {opacity: 0.5;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="background-stars"></div>
+
+  <div id="heroDisplay">
+    <img id="heroImage" src="" alt="Hero Image">
+    <div id="heroName"></div>
+  </div>
+
+  <div class="story-text">
+    <h2>✨ Chapter 2: A Trail of Clues ✨</h2>
+    <p id="dynamicStory"></p>
+
+    <button class="choice-btn" onclick="goToNextChapter('continue', 'chapter3.html')">➡️ Continue Investigation</button>
+    <button class="choice-btn" onclick="goToNextChapter('return', 'chapter3.html')">↩️ Return to the Mayor</button>
+  </div>
+
+  <script>
+    function initHero() {
+      const hero = localStorage.getItem("hero");
+      const heroName = localStorage.getItem("heroName");
+      if (hero && heroName) {
+        const img = document.getElementById("heroImage");
+        const name = document.getElementById("heroName");
+        if (img && name) {
+          img.src = "images/" + hero + ".png";
+          name.textContent = heroName;
+        }
+      }
+    }
+
+    function goToNextChapter(choice, nextPage) {
+      localStorage.setItem("previousChoice", choice);
+      window.location.href = nextPage;
+    }
+
+    window.onload = function () {
+      initHero();
+
+      const choice = localStorage.getItem("previousChoice");
+      const paragraph = document.getElementById("dynamicStory");
+
+      if (choice === "tower") {
+        paragraph.innerHTML = `The Crystal Tower looms above, its surface cracked like shattered glass. Inside, you find glowing footprints that pulse with an eerie blue light. The air hums with static — the kind that makes your skin crawl. Something was here. Something powerful... and it's not far.`;
+      } else if (choice === "woods") {
+        paragraph.innerHTML = `The Whispering Woods greet you with a ghostly silence. Trees sway without wind, their branches forming symbols in the sky. A familiar figure steps forward — your old mentor, wrapped in a cloak of silver thread. "Destiny follows you," they say, handing you a glowing map. "But the Shadow Sage waits beyond the veil."`;
+      } else if (choice === "market") {
+        paragraph.innerHTML = `The market is alive with rumor. Merchants whisper of cloaked figures who traded gems that flickered with strange colors. You follow a trail of shimmer left behind — a strange dust, not of this world. At the edge of the stalls, a child hands you a torn scrap of cloth embroidered with the symbol of the Great Crystal.`;
+      } else {
+        paragraph.innerHTML = `You scan the city for answers, unsure of what path to follow. But no matter where you look, one truth remains — the Crystal did not vanish on its own.`;
+      }
+    };
+  </script>
+
+</body>
+</html>
+

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Mystery Comic - Chapter 5</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to bottom, #121212, #1e003a);
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      padding: 50px;
+      text-align: center;
+    }
+
+    #heroDisplay {
+      margin-bottom: 30px;
+    }
+
+    #heroImage {
+      width: 150px;
+      height: 270px;
+      object-fit: contain;
+    }
+
+    #heroName {
+      font-size: 24px;
+      font-weight: bold;
+      margin-top: 10px;
+      text-shadow: 1px 1px 4px #000;
+    }
+
+    .story-text {
+      max-width: 800px;
+      margin: auto;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .choice-btn {
+      margin: 20px;
+      padding: 12px 35px;
+      background-color: #7f00ff;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 20px;
+      box-shadow: 0 4px 15px rgba(127, 0, 255, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <div id="heroDisplay">
+    <img id="heroImage" src="" alt="Hero Image">
+    <div id="heroName"></div>
+  </div>
+
+  <div class="story-text" id="chapterContent"></div>
+
+  <div id="councilOptions"></div>
+  <button class="choice-btn" onclick="goToNextChapter('council', 'chapter6.html')">⚖️ Face the Council's Verdict</button>
+
+  <script>
+    function initHero() {
+      const hero = localStorage.getItem("hero");
+      const heroName = localStorage.getItem("heroName");
+      if (hero && heroName) {
+        document.getElementById("heroImage").src = "images/" + hero + ".png";
+        document.getElementById("heroName").textContent = heroName;
+      }
+    }
+
+    function goToNextChapter(choice, nextPage) {
+      localStorage.setItem("previousChoice", choice);
+      window.location.href = nextPage;
+    }
+
+    window.onload = function () {
+      initHero();
+      const choice = localStorage.getItem("previousChoice");
+      const content = document.getElementById("chapterContent");
+
+      let base = `<h2>✨ Chapter 5: Council of Shadows ✨</h2>
+        <p>The chamber is carved from black stone, lit by orbs that pulse with soft blue light. At the center stands a round table, ancient and cracked — once a beacon of unity. Three figures await you.</p>
+        <p>Mayor Ellison rises first. <em>\"You're here. Good. Time is running out.\"</em></p>
+        <p>Across from him, the Shadow Sage nods slowly, their eyes flickering like stars. <em>\"The threads are coming together. But so are the dangers.\"</em></p>
+        <p>Then, a third figure steps forward — cloaked in bronze, face hidden. <em>\"They deserve to hear the truth.\"</em></p>`;
+
+      let impact = "";
+
+      if (choice === "tower") {
+        impact = `<p><strong>Mayor Ellison</strong> turns to you: <em>\"You saw it yourself — the broken pedestal, the ancient seal. Whoever did this is awakening powers we don’t understand.\"</em></p>`;
+      } else if (choice === "woods") {
+        impact = `<p><strong>The Shadow Sage</strong> speaks: <em>\"The forest whispered your name. You followed the roots. You are connected to what’s coming — and what must be done.\"</em></p>`;
+      } else if (choice === "market") {
+        impact = `<p><strong>The cloaked stranger</strong> steps forward: <em>\"You uncovered our plans. But we’re not your enemies — we’re trying to stop the real one.\"</em></p>`;
+      } else {
+        impact = `<p>All three figures stare at you in silence. You feel their expectations — and the weight of what you haven’t yet learned.</p>`;
+      }
+
+      content.innerHTML = base + impact + `<p><em>It’s time to decide how the story continues...</em></p>`;
+
+      const options = document.getElementById("councilOptions");
+      options.innerHTML = `
+        <button class='choice-btn' onclick="alert('You show the Mayor your glowing medallion. He narrows his eyes and nods solemnly. \"You’ve earned this,\" he says.')">💠 Show the Mayor your medallion</button>
+        <button class='choice-btn' onclick="alert('You ask the Shadow Sage about the prophecy. They close their eyes. \"The hero rises when balance breaks,\" they whisper. \"And balance is already tipping.\"')">🌌 Ask the Shadow Sage about the prophecy</button>
+        <button class='choice-btn' onclick="alert('You demand the cloaked figure reveal their true role. They pull back their hood just slightly — not enough to see — and say, \"You’ll know soon enough. But first, you must survive.\"')">🕵️ Confront the cloaked figure</button>
+      `;
+    };
+  </script>
+</body>
+</html>
+

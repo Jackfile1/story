@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hero Mystery Comic - Chapter 4</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to bottom, #121212, #1e003a);
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      padding: 50px;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #heroDisplay {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    #heroImage {
+      width: 150px;
+      height: 270px;
+      object-fit: contain;
+    }
+
+    #heroName {
+      font-size: 24px;
+      font-weight: bold;
+      text-shadow: 1px 1px 4px #000;
+      margin-top: 10px;
+    }
+
+    .story-text {
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 10px auto;
+      text-align: center;
+    }
+
+    .choice-btn {
+      margin: 20px;
+      padding: 12px 35px;
+      background-color: #7f00ff;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 20px;
+      box-shadow: 0 4px 15px rgba(127, 0, 255, 0.7);
+    }
+
+    .background-stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(white 2px, transparent 2px);
+      background-size: 100px 100px;
+      opacity: 0.2;
+      animation: twinkle 5s infinite alternate;
+      z-index: -1;
+    }
+
+    @keyframes twinkle {
+      from {opacity: 0.2;}
+      to {opacity: 0.5;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="background-stars"></div>
+
+  <div id="heroDisplay">
+    <img id="heroImage" src="" alt="Hero Image">
+    <div id="heroName"></div>
+  </div>
+
+  <div class="story-text">
+    <h2>✨ Chapter 4: The Shadow Beckons ✨</h2>
+    <p id="dynamicStory"></p>
+    <div id="buttons"></div>
+  </div>
+
+  <script>
+    function initHero() {
+      const hero = localStorage.getItem("hero");
+      const heroName = localStorage.getItem("heroName");
+      if (hero && heroName) {
+        document.getElementById("heroImage").src = "images/" + hero + ".png";
+        document.getElementById("heroName").textContent = heroName;
+      }
+    }
+
+    function goToNextChapter(choice, nextPage) {
+      localStorage.setItem("previousChoice", choice);
+      window.location.href = nextPage;
+    }
+
+    window.onload = function () {
+      initHero();
+
+      const prev = localStorage.getItem("previousChoice");
+      const text = document.getElementById("dynamicStory");
+      const buttons = document.getElementById("buttons");
+
+      if (prev === "tower") {
+        text.innerHTML = `You descend the staircase beneath the Crystal Tower. The deeper you go, the louder the hum. At the base lies a chamber filled with starlight — and in its center, a shattered pedestal etched with the same symbols seen above. Someone — or something — broke a powerful seal.<br><br><em>\"You’ve seen the runes,\"</em> the Shadow Sage whispers. <em>\"They once protected our world... but now they are breaking.\"</em>`;
+        buttons.innerHTML = `
+          <button class="choice-btn" onclick="goToNextChapter('return', 'mayor.html')">🏛️ Return to the Mayor</button>
+        `;
+      } else if (prev === "woods") {
+        text.innerHTML = `Fog thickens as you pass into the hidden heart of the Whispering Woods. The trees part to reveal a stone circle. A hooded figure steps forward — eyes like twilight, voice like thunder. <br><br><em>\"You returned to the roots,\"</em> says the Shadow Sage. <em>\"The forest still remembers what the city forgot.\"</em>`;
+        buttons.innerHTML = `
+          <button class="choice-btn" onclick="goToNextChapter('shadow', 'chapter5.html')">🌀 Seek the Shadow Sage</button>
+          <button class="choice-btn" onclick="goToNextChapter('return', 'mayor.html')">🏛️ Return to the Mayor</button>
+        `;
+      } else if (prev === "market") {
+        text.innerHTML = `You follow the trail to the city's edge, where a hidden stair leads into the old aqueducts. Below, you find a strange workshop filled with glowing blueprints and stolen artifacts. A hidden group has been preparing for something... and you just stepped into their lair.<br><br><em>\"You saw their plans,\"</em> the Shadow Sage murmurs. <em>\"But you’ve only seen the surface of the storm.\"</em>`;
+        buttons.innerHTML = `
+          <button class="choice-btn" onclick="goToNextChapter('return', 'mayor.html')">🏛️ Return to the Mayor</button>
+        `;
+      } else {
+        text.innerHTML = `The air grows still. A decision hangs in the air. The fate of Starfall City tightens like a thread — and you are its final strand.`;
+        buttons.innerHTML = `
+          <button class="choice-btn" onclick="goToNextChapter('return', 'mayor.html')">🏛️ Return to the Mayor</button>
+        `;
+      }
+    };
+  </script>
+
+</body>
+</html>
+
+
+

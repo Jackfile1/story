@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hero Mystery Comic - Chapter 6C</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to bottom, #1e003a, #0a001f);
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      padding: 50px;
+      text-align: center;
+    }
+    .story-text {
+      max-width: 800px;
+      margin: auto;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+    .choice-btn {
+      margin: 30px auto;
+      padding: 12px 35px;
+      background-color: #4444ff;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 20px;
+      box-shadow: 0 4px 15px rgba(68, 68, 255, 0.7);
+    }
+      .save-load {
+      margin-top: 40px;
+    }
+    .save-load button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background-color: #6666ff;
+      color: white;
+      cursor: pointer;
+    }
+</head>
+<body>
+  <div class="story-text">
+    <h2>⏳ Chapter 6C: The Quiet Before ✨</h2>
+    <p>You close your eyes and whisper, <em>“We wait. We trust.”</em></p>
+    <p>The chamber remains still. The Mayor paces nervously. The Shadow Sage kneels in meditation. The cloaked figure vanishes without a word.</p>
+    <p>Outside, clouds swirl. Lightning flickers at the horizon. But inside — peace. An uneasy peace.</p>
+    <p>Somewhere, the first domino begins to fall.</p>
+  </div>
+  <button class="choice-btn" onclick="alert('To be continued...')">➡️ Continue</button>
+  <div class="save-load">
+    <button onclick="saveGame()">💾 Save Progress</button>
+    <button onclick="loadGame()">📂 Load Progress</button>
+  </div>
+
+  <script>
+    function saveGame() {
+      const state = {
+        hero: localStorage.getItem("hero"),
+        heroName: localStorage.getItem("heroName"),
+        previousChoice: localStorage.getItem("previousChoice"),
+        page: window.location.href
+      };
+      localStorage.setItem("savedGame", JSON.stringify(state));
+      alert("Game saved!");
+    }
+
+    function loadGame() {
+      const saved = localStorage.getItem("savedGame");
+      if (saved) {
+        const state = JSON.parse(saved);
+        localStorage.setItem("hero", state.hero);
+        localStorage.setItem("heroName", state.heroName);
+        localStorage.setItem("previousChoice", state.previousChoice);
+        window.location.href = state.page;
+      } else {
+        alert("No saved game found.");
+      }
+    }
+  </script>
+</body>
+</html>
+

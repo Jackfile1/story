@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hero Mystery Comic - Chapter 3</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(to bottom, #121212, #1e003a);
+      color: white;
+      font-family: 'Roboto', sans-serif;
+      padding: 50px;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #heroDisplay {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    #heroImage {
+      width: 150px;
+      height: 270px;
+      object-fit: contain;
+    }
+
+    #heroName {
+      font-size: 24px;
+      font-weight: bold;
+      text-shadow: 1px 1px 4px #000;
+      margin-top: 10px;
+    }
+
+    .story-text {
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 800px;
+      margin: 10px auto;
+      text-align: center;
+    }
+
+    .choice-btn {
+      margin: 20px;
+      padding: 12px 35px;
+      background-color: #7f00ff;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 20px;
+      box-shadow: 0 4px 15px rgba(127, 0, 255, 0.7);
+    }
+
+    .background-stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(white 2px, transparent 2px);
+      background-size: 100px 100px;
+      opacity: 0.2;
+      animation: twinkle 5s infinite alternate;
+      z-index: -1;
+    }
+
+    @keyframes twinkle {
+      from {opacity: 0.2;}
+      to {opacity: 0.5;}
+    }
+  </style>
+</head>
+<body>
+
+  <div class="background-stars"></div>
+
+  <div id="heroDisplay">
+    <img id="heroImage" src="" alt="Hero Image">
+    <div id="heroName"></div>
+  </div>
+
+  <div class="story-text">
+    <h2>✨ Chapter 3: Into the Unknown ✨</h2>
+    <p id="dynamicText"></p>
+
+    <button class="choice-btn" onclick="goToNextChapter('investigate', 'chapter4.html')">🔎 Keep Investigating</button>
+    <button class="choice-btn" onclick="goToNextChapter('leave', 'chapter4.html')">🚪 Leave This Area</button>
+  </div>
+
+  <script>
+    function initHero() {
+      const hero = localStorage.getItem("hero");
+      const heroName = localStorage.getItem("heroName");
+      if (hero && heroName) {
+        const img = document.getElementById("heroImage");
+        const name = document.getElementById("heroName");
+        if (img && name) {
+          img.src = "images/" + hero + ".png";
+          name.textContent = heroName;
+        }
+      }
+    }
+
+    function goToNextChapter(choice, nextPage) {
+      localStorage.setItem("previousChoice", choice);
+      window.location.href = nextPage;
+    }
+
+    window.onload = function () {
+      initHero();
+
+      const previousChoice = localStorage.getItem("previousChoice");
+      const dynamicText = document.getElementById("dynamicText");
+
+      if (previousChoice === "tower") {
+        dynamicText.innerHTML = `A hidden door beneath the Crystal Tower creaks open as you approach. Inside, the air grows colder. Arcane symbols flicker across the walls, whispering secrets in forgotten tongues. A soft hum pulses through the floor — something ancient is awakening below.`;
+      } else if (previousChoice === "woods") {
+        dynamicText.innerHTML = `The path winds deeper into the woods. You pass trees with glowing runes etched into their bark. The air is thick with fog. You sense you're not alone. Then — a low voice behind you. "Not all who wander here seek light..."`;
+      } else if (previousChoice === "market") {
+        dynamicText.innerHTML = `A rusted gate at the market’s edge leads to the forgotten tunnels beneath the city. Footsteps echo ahead. You descend quietly, guided by torchlight and a sense of growing danger. Someone — or something — is waiting in the dark.`;
+      } else {
+        dynamicText.innerHTML = `You wander the city with purpose, though unsure where the trail leads. The storm builds around you. It feels like the city itself is holding its breath.`;
+      }
+    };
+  </script>
+
+</body>
+</html>
+
+
+
+
