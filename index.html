@@ -59,7 +59,40 @@
       cursor: pointer;
       box-shadow: 0 4px 20px rgba(127, 0, 255, 0.7);
     }
-  </style>
+      .hero-card {
+      background: #2c2c2c;
+      border-radius: 20px;
+      padding: 20px;
+      width: 160px;
+      box-shadow: 0 4px 15px rgba(127, 0, 255, 0.5);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .hero-card:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 25px rgba(127, 0, 255, 0.8);
+    }
+@media (max-width: 600px) {
+  h1 {
+    font-size: 28px;
+  }
+  .hero-card {
+    width: 120px;
+    padding: 15px;
+  }
+  .hero-name {
+    font-size: 16px;
+  }
+}
+
+body {
+  opacity: 0;
+  animation: fadeIn 1.2s ease forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+</style>
 </head>
 <body>
   <h1>🌟 Welcome to the Hero Mystery Comic 🌟</h1>
